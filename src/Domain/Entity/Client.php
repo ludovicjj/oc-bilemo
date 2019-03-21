@@ -18,16 +18,6 @@ class Client extends AbstractEntity implements UserInterface
     protected $password;
 
     /**
-     * @var \DateTime
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $updatedAt;
-
-    /**
      * @var array
      */
     protected $roles;
@@ -49,8 +39,6 @@ class Client extends AbstractEntity implements UserInterface
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = null;
         $this->roles = ['ROLE_CLIENT'];
         parent::__construct();
     }
@@ -84,22 +72,6 @@ class Client extends AbstractEntity implements UserInterface
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
     }
 
     /**
