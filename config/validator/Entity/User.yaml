@@ -1,0 +1,8 @@
+App\Domain\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: email
+            message: Cette adresse email déjà utilisé.
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: phoneNumber
+            message: Ce numero de téléphone est déjà utilisé.
