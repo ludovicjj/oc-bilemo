@@ -1,0 +1,22 @@
+App\Domain\User\AddUser\AddUserInput:
+    properties:
+        firstName:
+            - NotBlank:
+                message: Veuillez saisir votre prénom.
+        lastName:
+            - NotBlank:
+                message: Veuillez saisir votre nom de famille.
+        phoneNumber:
+            - NotBlank:
+                message: Veuillez saisir votre numéro de telephone.
+            - Length:
+                max: 10
+                maxMessage: Maximum 10 chiffres.
+            - Length:
+                min: 10
+                minMessage: Minimum 10 chiffres.
+        email:
+            - NotBlank:
+                message: Veuillez saisir une adresse email.
+            - Email:
+                message: Le format de l'adresse email est invalide.
