@@ -5,7 +5,7 @@ namespace App\Domain\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Client implements UserInterface
+class Client extends AbstractEntity implements UserInterface
 {
     /**
      * @var string
@@ -52,6 +52,7 @@ class Client implements UserInterface
         $this->createdAt = new \DateTime();
         $this->updatedAt = null;
         $this->roles = ['ROLE_CLIENT'];
+        parent::__construct();
     }
 
     /**
@@ -68,7 +69,6 @@ class Client implements UserInterface
         $this->password = $password;
         $this->email = $email;
     }
-
 
     /**
      * @return string
