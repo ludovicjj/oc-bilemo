@@ -4,17 +4,22 @@ namespace App\Domain\Client\AddClient;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RequestResolver
 {
     /** @var SerializerInterface */
     protected $serializer;
 
+    protected $validator;
+
     public function __construct(
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
     )
     {
         $this->serializer = $serializer;
+        $this->validator = $validator;
     }
 
     public function resolve(Request $request)
@@ -25,5 +30,7 @@ class RequestResolver
             AddClientInput::class,
             'json'
         );
+
+        $constraintList = $this->validator->validate($input);
     }
 }
