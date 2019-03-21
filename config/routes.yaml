@@ -1,1 +1,2 @@
-
+api_client_login:
+    path: /api/login/client
