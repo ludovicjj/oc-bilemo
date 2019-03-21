@@ -2,7 +2,6 @@
 
 namespace App\Domain\Common;
 
-use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
 use App\Responders\JsonResponder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -25,7 +24,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             case ValidatorException::class:
                 $this->processValidatorException($event);
                 break;
-            case ProcessorErrorsHttp::class:
+            case HttpException::class:
                 $this->processHttpException($event);
                 break;
         }
