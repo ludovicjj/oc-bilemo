@@ -5,9 +5,14 @@ namespace App\Domain\Common\Factory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use App\Domain\Common\Exceptions\ValidatorException;
 
 class ErrorsValidationFactory
 {
+    /**
+     * @param ConstraintViolationListInterface $constraintViolationList
+     * @throws ValidatorException
+     */
     public static function buildError(ConstraintViolationListInterface $constraintViolationList)
     {
         if (count($constraintViolationList) > 0) {
