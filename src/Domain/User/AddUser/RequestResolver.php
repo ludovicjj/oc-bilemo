@@ -2,6 +2,7 @@
 
 namespace App\Domain\User\AddUser;
 
+use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
 use App\Domain\Common\Factory\ErrorsValidationFactory;
 use App\Domain\Entity\Client;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,7 @@ class RequestResolver
     /** @var SerializerInterface */
     protected $serializer;
 
+    /** @var Security  */
     protected $security;
 
     /**
