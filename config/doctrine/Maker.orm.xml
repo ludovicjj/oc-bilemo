@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Domain\Entity\Maker" table="lj_maker" repository-class="App\Domain\Repository\MakerRepository">
+        <id name="id" type="uuid"  />
+        <field name="name" type="string" length="255" />
+        <field name="createdAt" type="datetime"  />
+        <field name="updatedAt" type="datetime" nullable="true" />
+        <one-to-many field="phones" target-entity="App\Domain\Entity\Phone" mapped-by="maker" />
+    </entity>
+</doctrine-mapping>
