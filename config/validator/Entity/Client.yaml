@@ -1,0 +1,8 @@
+App\Domain\Entity\Client:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: username
+            message: Ce pseudo est déjà utilisé.
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: email
+            message: Cette adresse e-mail est déjà utilisée.

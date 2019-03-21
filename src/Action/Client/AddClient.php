@@ -25,9 +25,10 @@ class AddClient
     /**
      * @Route("/api/clients", name="add_client", methods={"POST"})
      * @param Request $request
+     * @throws \App\Domain\Common\Exceptions\ValidatorException
      */
     public function add(Request $request)
     {
-        $this->requestResolver->resolve($request);
+        $input = $this->requestResolver->resolve($request);
     }
 }
