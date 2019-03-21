@@ -1,0 +1,13 @@
+App\Domain\Client\AddClient\AddClientInput:
+    properties:
+        username:
+            - NotBlank:
+                message: Veuillez choisir un pseudo.
+        password:
+            - NotBlank:
+                message: Veuillez choisir un mot de passe.
+        email:
+            - NotBlank:
+                message: Veuillez saisir une adresse email.
+            - Email:
+                message: Le format de l'adresse email est invalide.
