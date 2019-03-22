@@ -2,15 +2,26 @@
 
 namespace App\Domain\Entity;
 
+use JMS\Serializer\Annotation as JMS;
+
+/**
+ * Class User
+ * @package App\Domain\Entity
+ * @JMS\ExclusionPolicy("all")
+ */
 class User extends AbstractEntity
 {
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"list_user"})
      */
     protected $firstName;
 
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"list_user"})
      */
     protected $lastName;
 
