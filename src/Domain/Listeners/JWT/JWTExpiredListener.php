@@ -9,10 +9,9 @@ class JWTExpiredListener
 {
     public function onJWTExpired(JWTExpiredEvent $event)
     {
-        /** @var JWTAuthenticationFailureResponse */
+        /** @var JWTAuthenticationFailureResponse $response */
         $response = $event->getResponse();
 
         $response->setMessage('Votre token a expiré. Veuillez vous reconnecter.');
-        $response->setStatusCode(401);
     }
 }

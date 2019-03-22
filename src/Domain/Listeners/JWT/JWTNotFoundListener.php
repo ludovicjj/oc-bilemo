@@ -10,11 +10,11 @@ class JWTNotFoundListener
     public function onJWTNotFound(JWTNotFoundEvent $event)
     {
         $data = [
-            'code'  => 403,
+            'code'  => 401,
             'message' => 'Le token est manquant.',
         ];
 
-        $response = new JsonResponse($data, 403);
+        $response = new JsonResponse($data, 401);
 
         $event->setResponse($response);
     }
