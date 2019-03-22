@@ -4,11 +4,20 @@ namespace App\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * Class AbstractEntity
+ * @package App\Domain\Entity
+ * @JMS\ExclusionPolicy("all")
+ */
 abstract class AbstractEntity
 {
     /**
      * @var string|UuidInterface
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     * @JMS\Groups({"list_user"})
      */
     protected $id;
 
