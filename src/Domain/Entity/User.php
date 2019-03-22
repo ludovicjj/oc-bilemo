@@ -2,15 +2,56 @@
 
 namespace App\Domain\Entity;
 
+use JMS\Serializer\Annotation as JMS;
+use Hateoas\Configuration\Annotation as Hateoas;
+
+/**
+ * Class User
+ * @package App\Domain\Entity
+ * @JMS\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "list_user",
+ *          parameters = { "client_id" = "expr(object.getClient().getId())" },
+ *          absolute = true
+ *      ),
+ *     exclusion=@Hateoas\Exclusion(groups={"list_user"})
+ * )
+ * @Hateoas\Relation(
+ *     "delete",
+ *     href = @Hateoas\Route(
+ *          "delete_user",
+ *          parameters = { "client_id" = "expr(object.getClient().getId())", "user_id" = "expr(object.getId())" },
+ *          absolute = true
+ *     ),
+ *     exclusion=@Hateoas\Exclusion(groups={"list_user"})
+ * )
+ * @Hateoas\Relation(
+ *     "add",
+ *     href = @Hateoas\Route(
+ *          "add_user",
+ *          parameters = { "client_id" = "expr(object.getClient().getId())" },
+ *          absolute = true
+ *     ),
+ *     exclusion=@Hateoas\Exclusion(groups={"list_user"})
+ * )
+ *
+ */
 class User extends AbstractEntity
 {
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"list_user"})
      */
     protected $firstName;
 
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"list_user"})
      */
     protected $lastName;
 
