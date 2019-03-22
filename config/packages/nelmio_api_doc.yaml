@@ -1,0 +1,443 @@
+nelmio_api_doc:
+
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+
+    documentation:
+        info:
+            title: Bilemo Api
+            description: API description for Bilemo App
+            version: 1.0.0
+
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Bearer: {TOKEN}, obtain by /api/login/client'
+                name: Authorization
+                in: header
+
+        tags:
+            - name: Authentication
+              description: Get access to your token
+            - name: Client
+              description: Manager Client
+            - name: Phone
+              description: Manager Phone
+
+        paths:
+            /api/login/client:
+                post:
+                    tags:
+                        - Authentication
+                    summary: Client authentication.
+                    consumes:
+                        - application/json
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: body
+                          name: body
+                          required: true
+                          description: Request payload must contain all informations.
+                          schema:
+                              $ref: '#/definitions/AuthenticationInput'
+                    responses:
+                        200:
+                            description: OK
+                            schema:
+                                $ref: "#/definitions/JwtSuccessOutput"
+                        400:
+                            description: Bad Request, require JSON.
+                        401:
+                            description: Unauthorized. Bad credential.
+                            schema:
+                                $ref: "#/definitions/JwtErrorOutput"
+            /api/clients:
+                post:
+                    tags:
+                        - Client
+                    summary: Client registration.
+                    description: '##  Allow access for anonymous user'
+                    consumes:
+                        - application/json
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: body
+                          name: body
+                          required: true
+                          description: Request payload must contain all informations.
+                          schema:
+                              $ref: '#/definitions/ClientInput'
+                    responses:
+                        201:
+                            description: Created
+                        400:
+                            description: Bad Request. Check your request.
+
+            /api/clients/{client_id}/users:
+                post:
+                    security:
+                        - Bearer: []
+                    tags:
+                        - Client
+                    summary: Create new user in client's user catalog.
+                    description: '## Only access for the client owner'
+                    consumes:
+                        - application/json
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: path
+                          name: client_id
+                          required: true
+                          type: string
+                          description: The client unique identifier.
+                        - in: body
+                          name: body
+                          required: true
+                          description: Request payload must contain all informations
+                          schema:
+                              $ref: '#/definitions/UserInput'
+                    responses:
+                        201:
+                            description: Created
+                        400:
+                            description: Bad Request. Check your request.
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+                        403:
+                            description: Forbidden. Client has no access.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+                get:
+                    security:
+                        - Bearer: []
+                    tags:
+                        - Client
+                    summary: Get all users from client's user catalog.
+                    description: '## Only access for the client owner'
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: path
+                          name: client_id
+                          required: true
+                          type: string
+                          description: The client unique identifier.
+                    responses:
+                        200:
+                            description: OK
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/ListUserOutput'
+                        204:
+                            description: NO CONTENT. Client's user catalog is empty
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+                        403:
+                            description: Forbidden. Client has no access.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+
+            /api/clients/{client_id}/users/{user_id}:
+                get:
+                    security:
+                        - Bearer: []
+                    tags:
+                        - Client
+                    summary: Get one user from client's user catalog
+                    description: '## Only access for the client owner'
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: path
+                          name: client_id
+                          required: true
+                          type: string
+                          description: The client unique identifier.
+                        - in: path
+                          name: user_id
+                          required: true
+                          type: string
+                          description: The user unique identifier.
+                    responses:
+                        200:
+                            description: OK
+                            schema:
+                                $ref: '#/definitions/ShowUserOutput'
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+                        403:
+                            description: Forbidden. Client has no access.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+                        404:
+                            description: Not Found. User not found for user_id.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+                delete:
+                    security:
+                        - Bearer: []
+                    summary: Delete one user from client's user catalog
+                    description: '## Only access for the client owner'
+                    produces:
+                        - application/json
+                    tags:
+                        - Client
+                    parameters:
+                        - in: path
+                          name: client_id
+                          required: true
+                          type: string
+                          description: The client unique identifier.
+                        - in: path
+                          name: user_id
+                          required: true
+                          type: string
+                          description: The user unique identifier.
+                    responses:
+                        204:
+                            description: No Content
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+                        403:
+                            description: Forbidden. Client has no access.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+                        404:
+                            description: Not Found. User not found for user_id.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+            /api/phones:
+                get:
+                    security:
+                        - Bearer: []
+                    tags:
+                        - Phone
+                    summary: Get all phones from phone's catalog
+                    description: '## Access for all clients'
+                    produces:
+                        - application/json
+                    responses:
+                        200:
+                            description: OK
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/ListPhoneOutput'
+                        204:
+                            description: NO_CONTENT. phone's catalog is empty
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+            /api/phones/{phone_id}:
+                get:
+                    security:
+                        - Bearer: []
+                    tags:
+                        - Phone
+                    summary: Get one phone from phone's catalog
+                    description: '## Access for all clients'
+                    produces:
+                        - application/json
+                    parameters:
+                        - in: path
+                          name: phone_id
+                          required: true
+                          type: string
+                          description: The phone unique identifier.
+                    responses:
+                        200:
+                            description: OK
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/definitions/ShowPhoneOutput'
+                        401:
+                            description: Unauthorized. Expired token | Missing token | Invalid token.
+                            schema:
+                                $ref: '#/definitions/JwtErrorOutput'
+                        404:
+                            description: Not Found. Phone not found for phone_id.
+                            schema:
+                                $ref: '#/definitions/ErrorOutput'
+
+
+
+        definitions:
+            AuthenticationInput:
+                type: object
+                properties:
+                    username:
+                        type: string
+                    password:
+                        type: string
+
+            JwtErrorOutput:
+                type: object
+                properties:
+                    code:
+                        type: integer
+                    message:
+                        type: string
+
+            JwtSuccessOutput:
+                type: object
+                properties:
+                    token:
+                        type: string
+                    client:
+                        type: object
+                        properties:
+                            id:
+                                type: string
+            ClientInput:
+                type: object
+                properties:
+                    username:
+                        type: string
+                    password:
+                        type: string
+                    email:
+                        type: string
+                        format: email
+                required:
+                    - username
+                    - password
+                    - email
+
+            UserInput:
+                type: object
+                properties:
+                    firstName:
+                        type: string
+                    lastName:
+                        type: string
+                    phoneNumber:
+                        type: string
+                    email:
+                        type: string
+                        format: email
+                required:
+                    - firstName
+                    - lastName
+                    - phoneNumber
+                    - email
+
+            ListUserOutput:
+                type: object
+                properties:
+                    id:
+                        type: string
+                    first_name:
+                        type: string
+                    last_name:
+                        type: string
+                    _links:
+                        type: object
+                        properties:
+                            self:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+                            delete:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+                            add:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+            ShowUserOutput:
+                type: object
+                properties:
+                    id:
+                        type: string
+                    first_name:
+                        type: string
+                    last_name:
+                        type: string
+                    phone_number:
+                        type: string
+                    email:
+                        type: string
+                        format: email
+                    _links:
+                        type: object
+                        properties:
+                            self:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+            ListPhoneOutput:
+                type: object
+                properties:
+                    id:
+                        type: string
+                    name:
+                        type: string
+                    price:
+                        type: number
+                        format: float
+                    _links:
+                        type: object
+                        properties:
+                            self:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+
+            ShowPhoneOutput:
+                type: object
+                properties:
+                    id:
+                        type: string
+                    name:
+                        type: string
+                    description:
+                        type: string
+                    price:
+                        type: number
+                        format: float
+                    stock:
+                        type: integer
+                    _links:
+                        type: object
+                        properties:
+                            self:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+                    _embedded:
+                        type: object
+                        properties:
+                            maker:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                    name:
+                                        type: string
+            ErrorOutput:
+                type: object
+                properties:
+                    message:
+                        type: string

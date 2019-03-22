@@ -11,7 +11,7 @@ class JWTInvalidListener
     {
         $response = new JWTAuthenticationFailureResponse(
             'Voytre token est invalide. Veuillez vous reconnecter.',
-            403
+            401
         );
 
         $event->setResponse($response);
