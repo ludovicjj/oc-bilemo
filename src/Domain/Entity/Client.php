@@ -4,7 +4,13 @@ namespace App\Domain\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * Class Client
+ * @package App\Domain\Entity
+ * @JMS\ExclusionPolicy("all")
+ */
 class Client extends AbstractEntity implements UserInterface
 {
     /**
@@ -29,6 +35,8 @@ class Client extends AbstractEntity implements UserInterface
 
     /**
      * @var ArrayCollection
+     * @JMS\Expose()
+     * @JMS\Groups({"list_user"})
      */
     protected $users;
 
