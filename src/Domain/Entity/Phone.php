@@ -2,10 +2,19 @@
 
 namespace App\Domain\Entity;
 
+use JMS\Serializer\Annotation as JMS;
+
+/**
+ * Class Phone
+ * @package App\Domain\Entity
+ * @JMS\ExclusionPolicy("all")
+ */
 class Phone extends AbstractEntity
 {
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"list_phone"})
      */
     protected $name;
 
@@ -16,6 +25,8 @@ class Phone extends AbstractEntity
 
     /**
      * @var float
+     * @JMS\Expose()
+     * @JMS\Groups({"list_phone"})
      */
     protected $price;
 
