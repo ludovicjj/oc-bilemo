@@ -9,7 +9,15 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * Class User
  * @package App\Domain\Entity
  * @JMS\ExclusionPolicy("all")
- *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "show_user",
+ *          parameters = { "client_id" = "expr(object.getClient().getId())", "user_id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *     exclusion=@Hateoas\Exclusion(groups={"show_user"})
+ * )
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
