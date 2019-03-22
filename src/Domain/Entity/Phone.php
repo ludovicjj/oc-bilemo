@@ -14,24 +14,28 @@ class Phone extends AbstractEntity
     /**
      * @var string
      * @JMS\Expose()
-     * @JMS\Groups({"list_phone"})
+     * @JMS\Groups({"list_phone", "show_phone"})
      */
     protected $name;
 
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"show_phone"})
      */
     protected $description;
 
     /**
      * @var float
      * @JMS\Expose()
-     * @JMS\Groups({"list_phone"})
+     * @JMS\Groups({"list_phone", "show_phone"})
      */
     protected $price;
 
     /**
      * @var int
+     * @JMS\Expose()
+     * @JMS\Groups({"show_phone"})
      */
     protected $stock;
 

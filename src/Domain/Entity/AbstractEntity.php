@@ -17,7 +17,7 @@ abstract class AbstractEntity
      * @var string|UuidInterface
      * @JMS\Expose()
      * @JMS\Type("string")
-     * @JMS\Groups({"list_user", "show_user", "list_phone"})
+     * @JMS\Groups({"list_user", "show_user", "list_phone", "show_phone"})
      */
     protected $id;
 
