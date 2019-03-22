@@ -44,24 +44,28 @@ class User extends AbstractEntity
     /**
      * @var string
      * @JMS\Expose()
-     * @JMS\Groups({"list_user"})
+     * @JMS\Groups({"list_user", "show_user"})
      */
     protected $firstName;
 
     /**
      * @var string
      * @JMS\Expose()
-     * @JMS\Groups({"list_user"})
+     * @JMS\Groups({"list_user", "show_user"})
      */
     protected $lastName;
 
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"show_user"})
      */
     protected $phoneNumber;
 
     /**
      * @var string
+     * @JMS\Expose()
+     * @JMS\Groups({"show_user"})
      */
     protected $email;
 
