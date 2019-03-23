@@ -15,6 +15,8 @@ use App\Domain\Entity\User;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Domain\Entity\AbstractEntity;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class DoctrineContext implements Context
 {
@@ -234,5 +236,24 @@ class DoctrineContext implements Context
         if (\is_null($user)) {
             throw new NotFoundHttpException(sprintf('Expected user with email : %s', $email));
         }
+    }
+
+    /**
+     * @Given I load fixtures with the following command :command
+     * @param $command
+     * @throws Exception
+     */
+    public function iLoadFixturesWithTheFollowingCommand($command)
+    {
+        $application = new Application($this->kernel);
+
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => $command,
+            '--no-interaction' => true,
+        ]);
+        $output = new \Symfony\Component\Console\Output\NullOutput();
+        $application->run($input, $output);
     }
 }
