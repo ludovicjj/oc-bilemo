@@ -52,7 +52,7 @@ class Loader
         }
 
         /** @var PersistentCollection $users */
-        $users = $client->getUsers();
+        $users = is_object($client) ? $client->getUsers() : null;
         $this->listUserInput->setUser($users);
 
         return $this->listUserInput->getInput();
