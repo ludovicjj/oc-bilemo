@@ -25,8 +25,7 @@ class ShowUser
     public function __construct(
         RequestResolver $requestResolver,
         NormalizerData $normalizerData
-    )
-    {
+    ) {
         $this->requestResolver = $requestResolver;
         $this->normalizerData = $normalizerData;
     }

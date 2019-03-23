@@ -2,7 +2,6 @@
 
 namespace App\Domain\Phone\ListPhone;
 
-
 class ListPhoneInput
 {
     /** @var array */
