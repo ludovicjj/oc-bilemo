@@ -2,6 +2,7 @@
 
 namespace App\Domain\Security;
 
+use App\Domain\Entity\Client;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -22,7 +23,9 @@ class ClientVoter extends Voter
 
     protected function voteOnAttribute($attribute, $object, TokenInterface $token)
     {
-        $currentClientId = is_object($token->getUser()) ? $token->getUser()->getId() : null;
+        $currentClient = is_object($token->getUser()) ? $token->getUser() : null;
+
+        $currentClientId = ($currentClient instanceof Client) ? $currentClient->getId() : null;
 
         if ($object !== $currentClientId) {
             return false;

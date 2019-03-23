@@ -22,10 +22,13 @@ class NormalizerData
 
     public function normalize(ShowPhoneInput $input): string
     {
+        $context = new SerializationContext();
+        $context->setGroups(['show_phone']);
+
         $data = $this->serializer->serialize(
             $input->getPhone(),
             'json',
-            SerializationContext::create()->setGroups(['show_phone'])
+            $context
         );
 
         return $data;
