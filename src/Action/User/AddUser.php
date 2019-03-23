@@ -47,6 +47,7 @@ class AddUser
         return JsonResponder::response(
             null,
             Response::HTTP_CREATED,
+            false,
             $output
         );
     }

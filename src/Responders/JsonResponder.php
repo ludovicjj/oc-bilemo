@@ -9,14 +9,14 @@ class JsonResponder
     /**
      * @param string|null $data
      * @param int $statusCode
-     * @param bool $cacheable
+     * @param bool $cacheAble
      * @param array $additionalHeaders
      * @return Response
      */
     public static function response(
         ?string $data,
         int $statusCode = Response::HTTP_OK,
-        bool $cacheable = false,
+        bool $cacheAble = false,
         array $additionalHeaders = []
     ) {
         $response = new Response(
@@ -31,7 +31,7 @@ class JsonResponder
             )
         );
 
-        if ($cacheable) {
+        if ($cacheAble) {
             $response
                 ->setPublic()
                 ->setSharedMaxAge(3600)

@@ -42,7 +42,8 @@ class ListUser
 
         return JsonResponder::response(
             $data,
-            is_null($data) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK
+            is_null($data) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK,
+            true
         );
     }
 }
