@@ -22,10 +22,13 @@ class NormalizerData
 
     public function normalize(ListUserInput $input)
     {
+        $context = new SerializationContext();
+        $context->setGroups(['list_user']);
+
         $data = $this->serializer->serialize(
             $input->getUsers(),
             'json',
-            SerializationContext::create()->setGroups(['list_user'])
+            $context
         );
         $result = json_decode($data, true);
 

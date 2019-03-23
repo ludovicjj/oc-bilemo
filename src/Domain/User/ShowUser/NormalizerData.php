@@ -26,10 +26,13 @@ class NormalizerData
      */
     public function normalize(ShowUserInput $input): string
     {
+        $context = new SerializationContext();
+        $context->setGroups(['show_user']);
+
         $data = $this->serializer->serialize(
             $input->getUser(),
             'json',
-            SerializationContext::create()->setGroups(['show_user'])
+            $context
         );
 
         return $data;
