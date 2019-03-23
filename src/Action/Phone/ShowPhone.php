@@ -43,7 +43,8 @@ class ShowPhone
 
         return JsonResponder::response(
             $data,
-            Response::HTTP_OK
+            Response::HTTP_OK,
+            true
         );
     }
 }
