@@ -9,9 +9,13 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Domain\Common\Factory\ClientFactory;
 use App\Domain\Common\Factory\UserFactory;
+use App\Domain\Common\Factory\MakerFactory;
+use App\Domain\Common\Factory\PhoneFactory;
 use Behat\Gherkin\Node\TableNode;
 use App\Domain\Entity\Client;
 use App\Domain\Entity\User;
+use App\Domain\Entity\Phone;
+use App\Domain\Entity\Maker;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Domain\Entity\AbstractEntity;
@@ -148,6 +152,29 @@ class DoctrineContext implements Context
     }
 
     /**
+     * @Given phone with name :name should have following id :identifier
+     * @param $name
+     * @param $identifier
+     * @throws NonUniqueResultException
+     * @throws ReflectionException
+     */
+    public function phoneWithNameShouldHaveFollowingId($name, $identifier)
+    {
+        $phone = $this->getManager()->getRepository(Phone::class)
+            ->createQueryBuilder('p')
+            ->where('p.name = :phone_name')
+            ->setParameter('phone_name', $name)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if (\is_null($phone)) {
+            throw new NotFoundHttpException(sprintf('expected phone with name : %s', $name));
+        }
+        $this->resetUuid($phone, $identifier);
+    }
+
+    /**
      * @Then the user with email :arg1 should not exist in database
      * @param $email
      * @throws Exception
@@ -255,5 +282,67 @@ class DoctrineContext implements Context
         ]);
         $output = new \Symfony\Component\Console\Output\NullOutput();
         $application->run($input, $output);
+    }
+
+    /**
+     * @Given I load this phone with maker :
+     * @param TableNode $table
+     * @throws \Exception
+     */
+    public function iLoadThisPhoneWithMaker(TableNode $table)
+    {
+        foreach ($table->getHash() as $hash) {
+            $maker = MakerFactory::create($hash['maker']);
+            $phone = PhoneFactory::create(
+                $hash['name'],
+                $hash['description'],
+                $hash['price'],
+                $hash['stock'],
+                $maker
+            );
+
+            $this->doctrine->getManager()->persist($phone);
+        }
+        $this->doctrine->getManager()->flush();
+    }
+
+    /**
+     * @Then the phone with id :phoneId should exist in database
+     * @param $phoneId
+     * @throws NonUniqueResultException
+     */
+    public function thePhoneWithIdShouldExistInDatabase($phoneId)
+    {
+        $phone = $this->getManager()->getRepository(Phone::class)
+            ->createQueryBuilder('p')
+            ->where('p.id = :phone_id')
+            ->setParameter('phone_id', $phoneId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if (\is_null($phone)) {
+            throw new NotFoundHttpException(sprintf('Expected phone with id :%s', $phoneId));
+        }
+    }
+
+    /**
+     * @Then the maker with name :name should exist in database
+     * @param $name
+     * @throws NonUniqueResultException
+     */
+    public function theMakerWithNameShouldExistInDatabase($name)
+    {
+        $maker = $this->doctrine->getManager()->getRepository(Maker::class)
+            ->createQueryBuilder('m')
+            ->where('m.name = :maker_name')
+            ->setParameter('maker_name', $name)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if (\is_null($maker)) {
+            throw new NotFoundHttpException(sprintf('Expected maker with name :%s', $name));
+        }
     }
 }
