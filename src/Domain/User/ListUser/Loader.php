@@ -31,8 +31,7 @@ class Loader
         TokenStorageInterface $tokenStorage,
         Security $security,
         ListUserInput $listUserInput
-    )
-    {
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->security = $security;
         $this->listUserInput = $listUserInput;

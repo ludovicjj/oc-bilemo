@@ -30,8 +30,7 @@ class RequestResolver
         EntityManagerInterface $entityManager,
         ShowUserInput $showUserInput,
         Security $security
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->showUserInput = $showUserInput;
         $this->security = $security;

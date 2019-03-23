@@ -30,8 +30,7 @@ class Persister
         EncoderFactoryInterface $encoderFactory,
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator
-    )
-    {
+    ) {
         $this->encoderFactory = $encoderFactory;
         $this->entityManager = $entityManager;
         $this->validator = $validator;

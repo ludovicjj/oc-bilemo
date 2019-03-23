@@ -2,7 +2,6 @@
 
 namespace App\Action\User;
 
-
 use App\Domain\User\AddUser\AddUserInput;
 use App\Domain\User\AddUser\Persister;
 use App\Domain\User\AddUser\RequestResolver;
@@ -27,8 +26,7 @@ class AddUser
     public function __construct(
         RequestResolver $requestResolver,
         Persister $persister
-    )
-    {
+    ) {
         $this->requestResolver = $requestResolver;
         $this->persister = $persister;
     }

@@ -25,8 +25,7 @@ class ListUser
     public function __construct(
         Loader $loader,
         NormalizerData $normalizerData
-    )
-    {
+    ) {
         $this->loader = $loader;
         $this->normalizerData = $normalizerData;
     }
