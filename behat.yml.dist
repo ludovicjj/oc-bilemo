@@ -2,11 +2,21 @@ default:
     suites:
         default:
             contexts:
-                - FeatureContext:
+                - CustomMinkContext
+                - CustomRestContext
+                - behatch:context:json
+                - DoctrineContext:
+                    doctrine: '@doctrine'
                     kernel: '@kernel'
+                    encoderFactory: '@security.encoder_factory.generic'
 
     extensions:
         Behat\Symfony2Extension:
             kernel:
                 bootstrap: features/bootstrap/bootstrap.php
                 class: App\Kernel
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony2: ~
+        Behatch\Extension: ~
