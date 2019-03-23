@@ -146,6 +146,26 @@ class DoctrineContext implements Context
     }
 
     /**
+     * @Then the user with email :arg1 should not exist in database
+     * @param $email
+     * @throws Exception
+     */
+    public function theUserWithEmailShouldNotExistInDatabase($email)
+    {
+        $arrayUser = $this->getManager()->getRepository(User::class)
+            ->createQueryBuilder('u')
+            ->where('u.email = :user_email')
+            ->setParameter('user_email', $email)
+            ->getQuery()
+            ->getScalarResult();
+        ;
+
+        if (count($arrayUser) > 0) {
+            throw new \Exception('expected no user', 500);
+        }
+    }
+
+    /**
      * @param AbstractEntity $entity
      * @param string $identifier
      * @throws ReflectionException
