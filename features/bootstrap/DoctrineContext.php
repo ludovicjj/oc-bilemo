@@ -123,6 +123,29 @@ class DoctrineContext implements Context
     }
 
     /**
+     * @Given user with email :email should have following id :identifier
+     * @param $email
+     * @param $identifier
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws ReflectionException
+     */
+    public function userWithEmailShouldHaveFollowingId($email, $identifier)
+    {
+        $user = $this->getManager()->getRepository(User::class)
+            ->createQueryBuilder('u')
+            ->where('u.email = :user_email')
+            ->setParameter('user_email', $email)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if (\is_null($user)) {
+            throw new NotFoundHttpException(sprintf('Expected user with email : %s', $email));
+        }
+        $this->resetUuid($user, $identifier);
+    }
+
+    /**
      * @param AbstractEntity $entity
      * @param string $identifier
      * @throws ReflectionException
