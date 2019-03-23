@@ -50,4 +50,45 @@ class CustomRestContext extends RestContext
 
         return $requestLogin->getContent();
     }
+
+    /**
+     * @When After authentication on url :urlLogin with method :methodLogin as username :username and password :password, I send a :method request to :url with body:
+     * @param $urlLogin
+     * @param $methodLogin
+     * @param $username
+     * @param $password
+     * @param $method
+     * @param $url
+     * @param PyStringNode $string
+     * @return mixed
+     */
+    public function afterAuthenticationOnUrlWithMethodAsUsernameAndPasswordISendARequestToWithBody($urlLogin, $methodLogin, $username, $password, $method, $url, PyStringNode $string)
+    {
+        $requestLogin = $this->request->send(
+            $methodLogin,
+            $this->locatePath($urlLogin),
+            [],
+            [],
+            json_encode([
+                "username" => $username,
+                "password" => $password
+            ]),
+            ['CONTENT_TYPE' => 'application/json']
+        );
+
+        $responseLogin = json_decode($requestLogin->getContent(), true);
+        $request = $this->request->send(
+            $method,
+            $this->locatePath($url),
+            [],
+            [],
+            $string !== null ? $string->getRaw() : null,
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_Authorization' => sprintf('Bearer %s', $responseLogin['token'])
+            ]
+        );
+
+        return $request->getContent();
+    }
 }
