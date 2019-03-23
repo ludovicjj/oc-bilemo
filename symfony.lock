@@ -42,6 +42,9 @@
     "behatch/contexts": {
         "version": "3.2.0"
     },
+    "composer/xdebug-handler": {
+        "version": "1.3.2"
+    },
     "container-interop/container-interop": {
         "version": "1.2.0"
     },
@@ -199,6 +202,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jean85/pretty-package-versions": {
+        "version": "1.2"
+    },
     "jms/metadata": {
         "version": "2.0.0"
     },
@@ -253,6 +259,30 @@
             "./config/routes/nelmio_api_doc.yaml"
         ]
     },
+    "nette/bootstrap": {
+        "version": "v2.4.6"
+    },
+    "nette/di": {
+        "version": "v2.4.15"
+    },
+    "nette/finder": {
+        "version": "v2.5.0"
+    },
+    "nette/neon": {
+        "version": "v3.0.0"
+    },
+    "nette/php-generator": {
+        "version": "v3.2.1"
+    },
+    "nette/robot-loader": {
+        "version": "v3.1.1"
+    },
+    "nette/utils": {
+        "version": "v2.5.3"
+    },
+    "nikic/php-parser": {
+        "version": "v4.2.1"
+    },
     "ocramius/package-versions": {
         "version": "1.4.0"
     },
@@ -267,6 +297,15 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.3.1"
+    },
+    "phpstan/phpstan": {
+        "version": "0.11.4"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.11.2"
     },
     "psr/cache": {
         "version": "1.0.1"
