@@ -25,4 +25,29 @@ class CustomRestContext extends RestContext
 
         return $request->getContent();
     }
+
+    /**
+     * @When I send a :method request to :url with username :username and password :password
+     * @param $method
+     * @param $url
+     * @param $username
+     * @param $password
+     * @return mixed
+     */
+    public function iSendARequestToWithUsernameAndPassword($method, $url, $username, $password)
+    {
+        $requestLogin = $this->request->send(
+            $method,
+            $this->locatePath($url),
+            [],
+            [],
+            json_encode([
+                "username" => $username,
+                "password" => $password
+            ]),
+            ['CONTENT_TYPE' => 'application/json']
+        );
+
+        return $requestLogin->getContent();
+    }
 }
