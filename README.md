@@ -63,7 +63,6 @@
             "email": "user@example.com"
         }
     
-    
 *   Now you can login. 
    
     Go to ^/api/login/client with Method POST.
