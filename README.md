@@ -14,43 +14,43 @@
 *   BazingaHateoas
 
 ## How to instal
-1. Download project :
+1.  Download project :
     ``` 
     git clone https://github.com/ludovicjj/oc-bilemo.git
     ```
-2. Install Dependencies :
+2.  Install Dependencies :
     ```
     composer install
     ```
-3. Generate the private and public SSH keys :
+3.  Generate the private and public SSH keys :
      ```
      $ mkdir -p config/jwt
      $ openssl genrsa -out config/jwt/private.pem -aes256 4096
      $ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
      ```
-4. Update your JWT passphrase
+4.  Update your JWT passphrase
     ```
      JWT_PASSPHRASE='your_secret_passphrase_here'
      ```
-5. Database :
+5.  Database :
     The database connection information is stored as an environment variable called DATABASE_URL. You can find and customize this inside .env 
     Replace ```db_user``` by your username and  ```db_password``` by your password. Replace ```db_name``` by your database's name as you want.
     ``` 
     DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
      ```
-6. Create database : 
+6.  Create database : 
     ```
     php bin/console doctrine:database:create
     ```
-7. Install fixtures :
+7.  Install fixtures :
     ```
     php bin/console doctrine:fixtures:load
     ```
-8. Project launch :
+8.  Project launch :
     ```
     php bin/console server:run
     ```
-## How to use :
+## How to use
 * First, run project and register you as a new client. 
    
    Go to ^/api/clients with Method POST. 
