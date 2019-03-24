@@ -51,7 +51,7 @@
     php bin/console server:run
     ```
 ## How to use
-* First, run project and register you as a new client. 
+*  First, run project and register you as a new client. 
    
    Go to ^/api/clients with Method POST. 
    
@@ -63,7 +63,7 @@
      "email": "user@example.com"
    }
    ```
-* Now you can login. 
+*  Now you can login. 
    
    Go to ^/api/login/client with Method POST.
    
@@ -78,8 +78,8 @@
 ## Documentation
   For view api's doc run project in local and got to ^/api/doc
 ## Test
-1. Create file .env.test at root project level
-2. In .env.test define your env variables for the test env here and add your JWT private and public key and your JWT passphrase
+1.  Create file .env.test at root project level
+2.  In .env.test define your env variables for the test env here and add your JWT private and public key and your JWT passphrase
     ```
     DATABASE_URL_TEST=sqlite:///%kernel.project_dir%/var/data.db
     
@@ -87,11 +87,11 @@
     JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
     JWT_PASSPHRASE='your_secret_passphrase_here'
     ```
-3. Create your database for the test env with the following command
+3.  Create your database for the test env with the following command
     ```
     php bin/console doctrine:database:create --env=test
     ```
-4. Run the following command with this tags for launch test
+4.  Run the following command with this tags for launch test
     ```
     vendor/bin/behat --tags=api_all
-    ```  
+    ```
