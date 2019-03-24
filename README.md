@@ -1,9 +1,9 @@
 # BileMo
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad1770f19bae44ed848a1d74857c3712)](https://www.codacy.com/app/ludovicjj/oc-bilemo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ludovicjj/oc-bilemo&amp;utm_campaign=Badge_Grade)
  
- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad1770f19bae44ed848a1d74857c3712)](https://www.codacy.com/app/ludovicjj/oc-bilemo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ludovicjj/oc-bilemo&amp;utm_campaign=Badge_Grade)
- 
- BileMo is an api REST for provide catalog of phone for their clients. Each clients can manage their catalog of users.
- 
+BileMo is an api REST for provide catalog of phone for their clients. Each clients can manage their catalog of users.
+
 ## Project using
 *   PHP 7.2
 *   Symfony 4.2
@@ -45,28 +45,28 @@
 7.  Install fixtures :
 
         php bin/console doctrine:fixtures:load
-        
+
 8.  Project launch :
 
         php bin/console server:run
 
 ## How to use
 *   First, run project and register you as a new client. 
-   
+
     Go to ^/api/clients with Method POST. 
-   
+
     Define your username, password and email in payload :
-    
+
         {
             "username": "string",
             "password": "string",
             "email": "user@example.com"
         }
     
-*   Now you can login. 
-   
+*   Now you can login.
+
     Go to ^/api/login/client with Method POST.
-   
+
     Provide your username and password in the payload :
     
         {
