@@ -87,12 +87,11 @@ For view api's doc run project in local and got to ^/api/doc
         JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
         JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
         JWT_PASSPHRASE='your_secret_passphrase_here'
-    
+
 3.  Create your database for the test env with the following command
 
         php bin/console doctrine:database:create --env=test
-    
+
 4.  Run the following command with this tags for launch test
 
         vendor/bin/behat --tags=api_all
-    
