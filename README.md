@@ -14,49 +14,44 @@
 *   BazingaHateoas
 
 ## How to instal
- 1. Download project :
- 
+1. Download project :
     ``` 
     git clone https://github.com/ludovicjj/oc-bilemo.git
     ```
-
- 2. Install Dependencies :
-
+2. Install Dependencies :
     ```
     composer install
     ```
- 
- 3. Generate the private and public SSH keys :
+3. Generate the private and public SSH keys :
      ```
      $ mkdir -p config/jwt
      $ openssl genrsa -out config/jwt/private.pem -aes256 4096
      $ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
      ```
- 
- 4. Database :
- 
+4. Update your JWT passphrase
+    ```
+     JWT_PASSPHRASE='your_secret_passphrase_here'
+     ```
+5. Database :
     The database connection information is stored as an environment variable called DATABASE_URL. You can find and customize this inside .env 
     Replace ```db_user``` by your username and  ```db_password``` by your password. Replace ```db_name``` by your database's name as you want.
     ``` 
     DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
      ```
-
- 5. Create database : 
+6. Create database : 
     ```
     php bin/console doctrine:database:create
     ```
-
- 6. Install fixtures :
+7. Install fixtures :
     ```
     php bin/console doctrine:fixtures:load
     ```
-    
- 7. Project launch :
+8. Project launch :
     ```
     php bin/console server:run
     ```
 ## How to use :
- * First, run project and register you as a new client. 
+* First, run project and register you as a new client. 
    
    Go to ^/api/clients with Method POST. 
    
@@ -68,8 +63,7 @@
      "email": "user@example.com"
    }
    ```
-   
- * Now you can login. 
+* Now you can login. 
    
    Go to ^/api/login/client with Method POST.
    
@@ -79,22 +73,25 @@
         "username": "string",
         "password": "string",
    }
-   ```
-   
+   ``` 
    For more options check api's documentation.
-    
 ## Documentation
-
   For view api's doc run project in local and got to ^/api/doc
-  
 ## Test
- 1. Create your database for the test env with the following command
+1. Create file .env.test at root project level
+2. In .env.test define your env variables for the test env here and add your JWT private and public key and your JWT passphrase
+    ```
+    DATABASE_URL_TEST=sqlite:///%kernel.project_dir%/var/data.db
+    
+    JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+    JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+    JWT_PASSPHRASE='your_secret_passphrase_here'
+    ```
+3. Create your database for the test env with the following command
     ```
     php bin/console doctrine:database:create --env=test
     ```
- 
- 2. Run the following command with this tags for launch test
+4. Run the following command with this tags for launch test
     ```
     vendor/bin/behat --tags=api_all
-    ```
-    
+    ```  
