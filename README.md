@@ -51,34 +51,35 @@
     php bin/console server:run
     ```
 ## How to use
-*  First, run project and register you as a new client. 
+*   First, run project and register you as a new client. 
    
-   Go to ^/api/clients with Method POST. 
+    Go to ^/api/clients with Method POST. 
    
-   Define your username, password and email in payload :
-   ```
-   {
-     "username": "string",
-     "password": "string",
-     "email": "user@example.com"
-   }
-   ```
-*  Now you can login. 
+    Define your username, password and email in payload :
+    ```
+    {
+      "username": "string",
+      "password": "string",
+      "email": "user@example.com"
+    }
+    ```
+*   Now you can login. 
    
-   Go to ^/api/login/client with Method POST.
+    Go to ^/api/login/client with Method POST.
    
-   Provide your username and password in the payload :
-   ```
-   {
-        "username": "string",
-        "password": "string",
-   }
-   ``` 
-   For more options check api's documentation.
+    Provide your username and password in the payload :
+    ```
+    {
+      "username": "string",
+      "password": "string"
+    }
+    ``` 
+    For more options check api's documentation.
 ## Documentation
-  For view api's doc run project in local and got to ^/api/doc
+For view api's doc run project in local and got to ^/api/doc
 ## Test
 1.  Create file .env.test at root project level
+
 2.  In .env.test define your env variables for the test env here and add your JWT private and public key and your JWT passphrase
     ```
     DATABASE_URL_TEST=sqlite:///%kernel.project_dir%/var/data.db
@@ -91,6 +92,7 @@
     ```
     php bin/console doctrine:database:create --env=test
     ```
+    
 4.  Run the following command with this tags for launch test
     ```
     vendor/bin/behat --tags=api_all
