@@ -62,18 +62,18 @@ BileMo is an api REST for provide catalog of phone for their clients. Each clien
             "password": "string",
             "email": "user@example.com"
         }
-    
+
 *   Now you can login.
 
     Go to ^/api/login/client with Method POST.
 
     Provide your username and password in the payload :
-    
+
         {
             "username": "string",
             "password": "string"
         }
-    
+
     For more options check api's documentation.
 ## Documentation
 For view api's doc run project in local and got to ^/api/doc
