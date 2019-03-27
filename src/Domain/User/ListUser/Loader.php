@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\ListUser;
 
-use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Domain\Entity\Client;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,15 +44,16 @@ class Loader
         /** @var TokenInterface|null $token */
         $token = $this->tokenStorage->getToken();
 
-        /** @var Client|string $client */
-        $client = !is_null($token) ? $token->getUser() : null;
+        /** @var Client|string|null $client */
+        $client = !\is_null($token) ? $token->getUser() : null;
 
         if (!$this->security->isGranted('CLIENT_CHECK', $clientId)) {
-            ProcessorErrorsHttp::throwAccessDenied('Vous n\'êtes pas autorisé à consulter ce catalogue d\'utilisateur');
+            throw new AccessDeniedHttpException('Vous n\'êtes pas autorisé à consulter ce catalogue d\'utilisateur');
         }
 
-        /** @var PersistentCollection $users */
-        $users = is_object($client) ? $client->getUsers() : null;
+        /** @var PersistentCollection|null $users */
+        $users = \is_object($client) ? $client->getUsers() : null;
+
         $this->listUserInput->setUser($users);
 
         return $this->listUserInput->getInput();

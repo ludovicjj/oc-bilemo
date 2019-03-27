@@ -20,6 +20,10 @@ class NormalizerData
         $this->serializer = $serializer;
     }
 
+    /**
+     * @param ListUserInput $input
+     * @return string|null
+     */
     public function normalize(ListUserInput $input)
     {
         $context = new SerializationContext();
@@ -30,6 +34,7 @@ class NormalizerData
             'json',
             $context
         );
+
         $result = json_decode($data, true);
 
         if (count($result) === 0) {

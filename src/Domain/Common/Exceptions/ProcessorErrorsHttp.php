@@ -2,23 +2,21 @@
 
 namespace App\Domain\Common\Exceptions;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProcessorErrorsHttp
 {
     public static function throwAccessDenied(string $message)
     {
-        throw new HttpException(
-            Response::HTTP_FORBIDDEN,
+        throw new AccessDeniedHttpException(
             $message
         );
     }
 
     public static function throwNotFound(string $message)
     {
-        throw new HttpException(
-            Response::HTTP_NOT_FOUND,
+        throw new NotFoundHttpException(
             $message
         );
     }

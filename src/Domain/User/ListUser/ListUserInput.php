@@ -2,19 +2,25 @@
 
 namespace App\Domain\User\ListUser;
 
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 
 class ListUserInput
 {
-    /** @var PersistentCollection */
+    /** @var Collection|null */
     protected $users;
 
-    public function getUsers(): PersistentCollection
+    /**
+     * @return Collection|null
+     */
+    public function getUsers(): ?Collection
     {
         return $this->users;
     }
 
-    public function setUser(PersistentCollection $users): void
+    /**
+     * @param Collection|null $users
+     */
+    public function setUser(?Collection $users): void
     {
         $this->users = $users;
     }
