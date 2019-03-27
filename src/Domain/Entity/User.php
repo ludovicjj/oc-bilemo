@@ -19,10 +19,19 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     exclusion=@Hateoas\Exclusion(groups={"show_user"})
  * )
  * @Hateoas\Relation(
- *      "self",
+ *      "list",
  *      href = @Hateoas\Route(
  *          "list_user",
  *          parameters = { "client_id" = "expr(object.getClient().getId())" },
+ *          absolute = true
+ *      ),
+ *     exclusion=@Hateoas\Exclusion(groups={"show_user"})
+ * )
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "show_user",
+ *          parameters = { "client_id" = "expr(object.getClient().getId())", "user_id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
  *     exclusion=@Hateoas\Exclusion(groups={"list_user"})

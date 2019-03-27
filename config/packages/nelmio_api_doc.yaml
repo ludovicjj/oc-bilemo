@@ -385,6 +385,11 @@ nelmio_api_doc:
                                 properties:
                                     href:
                                         type: string
+                            list:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
             ListPhoneOutput:
                 type: object
                 properties:
@@ -422,6 +427,11 @@ nelmio_api_doc:
                         type: object
                         properties:
                             self:
+                                type: object
+                                properties:
+                                    href:
+                                        type: string
+                            list:
                                 type: object
                                 properties:
                                     href:
