@@ -6,7 +6,7 @@ use App\Domain\Entity\Phone;
 use App\Domain\Repository\PhoneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RequestResolver
 {
@@ -16,6 +16,11 @@ class RequestResolver
     /** @var EntityManagerInterface  */
     protected $entityManager;
 
+    /**
+     * RequestResolver constructor.
+     * @param ShowPhoneInput $input
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         ShowPhoneInput $input,
         EntityManagerInterface $entityManager
@@ -40,7 +45,9 @@ class RequestResolver
         $phone = $phoneRepository->phoneExist($phoneId);
 
         if (\is_null($phone)) {
-            ProcessorErrorsHttp::throwNotFound(sprintf('Aucun téléphone ne correspond à l\'id : %s', $phoneId));
+            throw new NotFoundHttpException(
+                sprintf('Aucun téléphone ne correspond à l\'id : %s', $phoneId)
+            );
         }
 
         $this->showPhoneInput->setPhone($phone);
