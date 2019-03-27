@@ -7,7 +7,8 @@ use App\Domain\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RequestResolver
 {
@@ -47,7 +48,7 @@ class RequestResolver
         $userId = $request->attributes->get('user_id');
 
         if (!$this->security->isGranted('CLIENT_CHECK', $clientId)) {
-            ProcessorErrorsHttp::throwAccessDenied(
+            throw new AccessDeniedHttpException(
                 'Vous n\'êtes pas autorisé à consulter les informations de cet utilisateur.'
             );
         }
@@ -59,7 +60,9 @@ class RequestResolver
         $user = $userRepository->userExist($userId);
 
         if (\is_null($user)) {
-            ProcessorErrorsHttp::throwNotFound(sprintf('Aucun utilisateur ne correspond à l\'id : %s', $userId));
+            throw new NotFoundHttpException(
+                sprintf('Aucun utilisateur ne correspond à l\'id : %s', $userId)
+            );
         }
 
         $this->showUserInput->setUser($user);
