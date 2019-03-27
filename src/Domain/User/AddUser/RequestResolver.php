@@ -3,10 +3,12 @@
 namespace App\Domain\User\AddUser;
 
 use App\Domain\Common\Exceptions\ProcessorErrorsHttp;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Domain\Common\Factory\ErrorsValidationFactory;
 use App\Domain\Entity\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Core\Security;
@@ -51,12 +53,22 @@ class RequestResolver
      */
     public function resolve(Request $request): AddUserInput
     {
-        /** @var Client $client */
-        $client = $this->tokenStorage->getToken()->getUser();
+        /** @var TokenInterface|null $token */
+        $token = $this->tokenStorage->getToken();
+
+        /** @var Client|null $client */
+        $client = \is_object($token) ? $token->getUser() : null;
+
+        if (\is_null($client)) {
+            throw new AccessDeniedHttpException(
+                'Veuillez vous connectez.'
+            );
+        }
+
         $clientId = $request->attributes->get('client_id');
 
         if (!$this->security->isGranted('CLIENT_CHECK', $clientId)) {
-            ProcessorErrorsHttp::throwAccessDenied(
+            throw new AccessDeniedHttpException(
                 'Vous n\'êtes pas autorisé à ajouter un utilisateur dans ce catalogue.'
             );
         }

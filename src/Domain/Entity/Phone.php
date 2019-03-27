@@ -29,6 +29,14 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     exclusion = @Hateoas\Exclusion(groups={"show_phone"})
  * )
  * @Hateoas\Relation(
+ *      "list",
+ *      href = @Hateoas\Route(
+ *          "list_phone",
+ *          absolute = true
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"show_phone"})
+ * )
+ * @Hateoas\Relation(
  *     "maker",
  *     embedded = @Hateoas\Embedded("expr(object.getMaker())"),
  *     exclusion = @Hateoas\Exclusion(groups={"show_phone"})

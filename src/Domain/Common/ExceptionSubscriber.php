@@ -7,7 +7,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use App\Domain\Common\Exceptions\ValidatorException;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -24,7 +25,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
             case ValidatorException::class:
                 $this->processValidatorException($event);
                 break;
-            case HttpException::class:
+            case AccessDeniedHttpException::class:
+                $this->processHttpException($event);
+                break;
+            case NotFoundHttpException::class:
                 $this->processHttpException($event);
                 break;
         }
@@ -50,7 +54,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
      */
     private function processHttpException(GetResponseForExceptionEvent $event)
     {
-        /** @var HttpException $exception */
+        /** @var AccessDeniedHttpException|NotFoundHttpException $exception */
         $exception = $event->getException();
         $event->setResponse(
             JsonResponder::response(
