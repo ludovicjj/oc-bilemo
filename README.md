@@ -28,7 +28,7 @@ BileMo is an api REST for provide catalog of phone for their clients. Each clien
         $ openssl genrsa -out config/jwt/private.pem -aes256 4096
         $ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 
-5.  Database :
+4.  Database :
 
     Create file .env.local at root project level. In this file define these parameters
 
@@ -60,16 +60,16 @@ BileMo is an api REST for provide catalog of phone for their clients. Each clien
 
         DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 
-6.  Create database : 
+5.  Create database : 
 
         php bin/console doctrine:database:create
 
-7.  Install fixtures :
+6.  Install fixtures :
 
         php bin/console doctrine:migrations:migrate
         php bin/console doctrine:fixtures:load
 
-8.  Project launch :
+7.  Project launch :
 
         php bin/console server:run
 
