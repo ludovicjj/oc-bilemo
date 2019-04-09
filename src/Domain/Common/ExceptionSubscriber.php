@@ -2,7 +2,7 @@
 
 namespace App\Domain\Common;
 
-use App\Responders\JsonResponder;
+use App\Responders\ErrorResponder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use App\Domain\Common\Exceptions\ValidatorException;
@@ -42,7 +42,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         /** @var ValidatorException $exception */
         $exception = $event->getException();
         $event->setResponse(
-            JsonResponder::response(
+            ErrorResponder::response(
                 (string) json_encode($exception->getErrors()),
                 $exception->getStatusCode()
             )
@@ -57,7 +57,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         /** @var AccessDeniedHttpException|NotFoundHttpException $exception */
         $exception = $event->getException();
         $event->setResponse(
-            JsonResponder::response(
+            ErrorResponder::response(
                 (string) json_encode(['message' => $exception->getMessage()]),
                 $exception->getStatusCode()
             )

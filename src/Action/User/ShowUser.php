@@ -42,6 +42,7 @@ class ShowUser
         $data = $this->normalizerData->normalize($input);
 
         return JsonResponder::response(
+            $request,
             $data,
             Response::HTTP_OK,
             true

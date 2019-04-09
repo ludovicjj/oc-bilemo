@@ -41,6 +41,7 @@ class ListUser
         $data = $this->normalizerData->normalize($input);
 
         return JsonResponder::response(
+            $request,
             $data,
             \is_null($data) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK,
             true
