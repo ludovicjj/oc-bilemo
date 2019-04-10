@@ -26,4 +26,26 @@ class PhoneRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countPhone()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getPhoneByPage(int $first, int $max)
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setFirstResult($first)
+            ->setMaxResults($max)
+            ->getQuery()
+            ->getResult();
+    }
 }

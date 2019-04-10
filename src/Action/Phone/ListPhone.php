@@ -34,10 +34,11 @@ class ListPhone
      * @Route("/api/phones", name="list_phone", methods={"GET"})
      * @param Request $request
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function listPhone(Request $request)
     {
-        $input = $this->loader->load();
+        $input = $this->loader->load($request);
 
         $data = $this->normalizerData->normalize($input);
 
