@@ -48,18 +48,23 @@ class PaginationFactory
         PhoneRepository $phoneRepository,
         Request $request
     ) {
-        //Get param 'page' with default value is 1
+        //TODO check if user ask page = 'hello'
+        //TODO check if page exist
+        //TODO creat getter for access to private properties
+        //TODO add link in response with nbPage, current page, nbItems...
+
+        //TODO Get param 'page' with default value is 1
         $this->currentPage = $request->query->get('page', 1);
 
-        //Get number of phone in DB
-        //return string|null
+        // TODO Get number of phone in DB
+        // TODO return string|null
         $this->nbItems = $phoneRepository->countPhone();
 
-        //Defined param first for query setFirstResult()
+        //TODO Defined param first for query setFirstResult()
         $first = $this->currentPage * $this->itemsPerPage - $this->itemsPerPage;
 
-        //Get phones for current page order by date
-        //Return array with object Phone
+        //TODO Get phones for current page order by date
+        //TODO Return array with object Phone
         $this->currentItemsByPage = $phoneRepository->getPhoneByPage($first, $this->itemsPerPage);
 
 
