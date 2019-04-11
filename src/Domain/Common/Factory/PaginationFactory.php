@@ -113,5 +113,4 @@ class PaginationFactory
     {
         return $this->links[$href] = $url;
     }
-
 }

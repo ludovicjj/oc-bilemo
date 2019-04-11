@@ -116,5 +116,4 @@ class Pagination
     {
         $this->links = $links;
     }
-
 }
