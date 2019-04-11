@@ -42,10 +42,11 @@ class Loader
     public function load(Request $request): ListPhoneInput
     {
 
-        $phoneCollectionPaginated = $this->paginationFactory->createPagination(
+        $phonePagination = $this->paginationFactory->createPagination(
             $this->entityManager->getRepository(Phone::class),
             $request
         );
+        die;
 
         $this->listPhoneInput->setPhone($phoneCollectionPaginated);
 

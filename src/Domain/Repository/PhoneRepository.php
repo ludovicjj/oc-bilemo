@@ -6,12 +6,14 @@ use App\Domain\Entity\Phone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class PhoneRepository extends ServiceEntityRepository
+class PhoneRepository extends AbstractRepository
 {
+    /**
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Phone::class);
     }
+     **/
 
     /**
      * @param string $phoneId
@@ -25,27 +27,5 @@ class PhoneRepository extends ServiceEntityRepository
             ->setParameter('phone_id', $phoneId)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    /**
-     * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function countPhone()
-    {
-        return $this->createQueryBuilder('p')
-            ->select('count(p.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    public function getPhoneByPage(int $first, int $max)
-    {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.createdAt', 'DESC')
-            ->setFirstResult($first)
-            ->setMaxResults($max)
-            ->getQuery()
-            ->getResult();
     }
 }
