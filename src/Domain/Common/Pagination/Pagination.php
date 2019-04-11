@@ -24,6 +24,9 @@ class Pagination
     /** @var array|mixed */
     protected $currentItemsByPage;
 
+    /** @var array */
+    protected $links;
+
     /**
      * Pagination constructor.
      * @param AbstractRepository $repository
@@ -66,7 +69,52 @@ class Pagination
      */
     public function getNbPages()
     {
-        $this->nbPages = (int) ceil($this->getNbItems()/$this->itemsPerPage);
+        $this->nbPages = (int) ceil($this->getNbItems() / $this->itemsPerPage);
         return $this->nbPages;
     }
+
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
+    /**
+     * @return bool
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function nextPage()
+    {
+        // 1 < 3 =>true
+        // 2 < 3 =>true
+        // 3 < 3 =>false
+        return $this->currentPage < $this->getNbPages();
+    }
+
+    /**
+     * @return bool
+     */
+    public function previousPage()
+    {
+        // 1 > 1 =>false
+        // 2 > 1 =>true
+        // 3 > 1 =>true
+        return $this->currentPage > 1;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param array $links
+     */
+    public function setLinks(array $links)
+    {
+        $this->links = $links;
+    }
+
 }

@@ -36,9 +36,10 @@ class JsonResponder
 
         if ($cacheAble) {
             $response
+                ->setEtag(md5($request->getContent()))
                 ->setPublic()
-                ->setSharedMaxAge(3600)
-                ->setMaxAge(3600);
+                ->isNotModified($request)
+            ;
         }
 
         return $response;

@@ -26,11 +26,12 @@ class NormalizerData
      */
     public function normalize(ListPhoneInput $input)
     {
+
         $context = new SerializationContext();
         $context->setGroups(['list_phone']);
 
         $data = $this->serializer->serialize(
-            $input->getPhone(),
+            $input,
             'json',
             $context
         );

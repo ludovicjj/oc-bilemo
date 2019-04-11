@@ -3,6 +3,7 @@
 namespace App\Domain\Phone\ListPhone;
 
 use App\Domain\Common\Factory\PaginationFactory;
+use App\Domain\Common\Pagination\Pagination;
 use App\Domain\Entity\Phone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,14 +42,21 @@ class Loader
      */
     public function load(Request $request): ListPhoneInput
     {
-
-        $phonePagination = $this->paginationFactory->createPagination(
-            $this->entityManager->getRepository(Phone::class),
-            $request
+        /** @var Pagination|null $phonePaginated */
+        $phonePaginated = $this->paginationFactory->create(
+            $request,
+            $this->entityManager->getRepository(Phone::class)
         );
-        die;
 
-        $this->listPhoneInput->setPhone($phoneCollectionPaginated);
+        if (\is_null($phonePaginated)) {
+            return $this->listPhoneInput->getInput();
+        }
+
+        //TODO Hydrate DTO
+        $this->listPhoneInput->setPhone($phonePaginated->getCurrentItemsByPage());
+        $this->listPhoneInput->setCurrentPage($phonePaginated->getCurrentPage());
+        $this->listPhoneInput->setLinks($phonePaginated->getLinks());
+        $this->listPhoneInput->setTotalItems($phonePaginated->getNbItems());
 
         return $this->listPhoneInput->getInput();
     }
