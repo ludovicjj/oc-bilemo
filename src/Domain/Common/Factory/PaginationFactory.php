@@ -4,6 +4,7 @@ namespace App\Domain\Common\Factory;
 
 use App\Domain\Repository\PhoneRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaginationFactory
 {
@@ -13,10 +14,6 @@ class PaginationFactory
      */
     protected $itemsPerPage;
 
-    /**
-     * @var int
-     */
-    protected $currentPage;
 
     /**
      * @var string|null
@@ -48,13 +45,28 @@ class PaginationFactory
         PhoneRepository $phoneRepository,
         Request $request
     ) {
-        //TODO check if user ask page = 'hello'
-        //TODO check if page exist
-        //TODO creat getter for access to private properties
-        //TODO add link in response with nbPage, current page, nbItems...
+        //TODO If user ask list phone without param page, page=>1
+        //TODO If user ask list phone with page=2, page=>2
+        //TODO If user ask list phone with page='hello', page=>0
+        /** @var int $currentPage */
+        $currentPage = (int) $request->query->get('page', 1);
 
-        //TODO Get param 'page' with default value is 1
-        $this->currentPage = $request->query->get('page', 1);
+        //TODO Get number of page
+        $nbPage = (int) ceil($phoneRepository->countPhone() / $this->itemsPerPage);
+
+        //TODO Check if page asked by user exist
+        //TODO If user ask page > pageExist => error
+        //TODO If user ask page < pageExist => error
+        if ($currentPage > $nbPage || $currentPage <= 0) {
+            throw new NotFoundHttpException(
+                sprintf('La page %s n\'existe pas', $request->query->get('page'))
+            );
+        }
+        dump('la page existe');
+        die;
+
+
+
 
         // TODO Get number of phone in DB
         // TODO return string|null

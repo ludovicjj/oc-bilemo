@@ -34,7 +34,7 @@ class PhoneRepository extends ServiceEntityRepository
     public function countPhone()
     {
         return $this->createQueryBuilder('p')
-            ->select('count(p)')
+            ->select('count(p.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
