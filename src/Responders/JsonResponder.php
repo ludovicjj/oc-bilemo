@@ -36,7 +36,7 @@ class JsonResponder
 
         if ($cacheAble) {
             $response
-                ->setEtag(md5($request->getContent()))
+                ->setEtag(md5($response->getContent()))
                 ->setPublic()
                 ->isNotModified($request)
             ;
