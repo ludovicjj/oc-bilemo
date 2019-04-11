@@ -44,6 +44,7 @@ class DeleteUser
         $this->deleter->delete($input);
 
         return JsonResponder::response(
+            $request,
             null,
             Response::HTTP_NO_CONTENT
         );

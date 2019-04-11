@@ -5,6 +5,7 @@ namespace App\Action\Phone;
 use App\Domain\Phone\ListPhone\Loader;
 use App\Domain\Phone\ListPhone\NormalizerData;
 use App\Responders\JsonResponder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,15 +32,18 @@ class ListPhone
 
     /**
      * @Route("/api/phones", name="list_phone", methods={"GET"})
+     * @param Request $request
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function listPhone()
+    public function listPhone(Request $request)
     {
-        $input = $this->loader->load();
+        $input = $this->loader->load($request);
 
         $data = $this->normalizerData->normalize($input);
 
         return JsonResponder::response(
+            $request,
             $data,
             is_null($data) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK,
             true

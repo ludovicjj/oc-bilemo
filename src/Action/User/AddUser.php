@@ -45,6 +45,7 @@ class AddUser
         $output = $this->persister->persist($input);
 
         return JsonResponder::response(
+            $request,
             null,
             Response::HTTP_CREATED,
             false,

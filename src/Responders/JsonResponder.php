@@ -2,11 +2,13 @@
 
 namespace App\Responders;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class JsonResponder
 {
     /**
+     * @param Request $request
      * @param string|null $data
      * @param int $statusCode
      * @param bool $cacheAble
@@ -14,6 +16,7 @@ class JsonResponder
      * @return Response
      */
     public static function response(
+        Request $request,
         ?string $data,
         int $statusCode = Response::HTTP_OK,
         bool $cacheAble = false,
@@ -33,9 +36,10 @@ class JsonResponder
 
         if ($cacheAble) {
             $response
+                ->setEtag(md5($request->getContent()))
                 ->setPublic()
-                ->setSharedMaxAge(3600)
-                ->setMaxAge(3600);
+                ->isNotModified($request)
+            ;
         }
 
         return $response;
